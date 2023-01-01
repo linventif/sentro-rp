@@ -23,7 +23,7 @@ end
 local folder = "sentro_context"
 local name = "Sentro Context"
 local license = "CC BY-SA 4.0"
-local version = "0.1.0"
+local version = "0.1.1"
 
 SentroContext = {}
 SentroContext.Config = {}
