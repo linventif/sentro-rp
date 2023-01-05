@@ -1,0 +1,13 @@
+1:
+    data:
+        classes:
+            1       =       tfa_ins2_rhino
+            2       =       weapon_vape_american
+            3       =       bkeypads_cracker
+            4       =       realistic_hook
+            5       =       tfa_ins2_rpk_74m
+            perm    =       1
+            id      =       144
+            name    =       weapons
+            order_id        =       118
+            receiver        =       76561198355293946
