@@ -1,20 +1,15 @@
-local languages = {}
+// If you want to add a official default language, contact me on discord: https://linventif.fr/discord
 
-// -- // -- // -- // -- // -- // -- // -- //
-// DO NOT EDIT ABOVE THIS LINE
-// -- // -- // -- // -- // -- // -- // -- //
-
-languages["french"] = {
-    ["close"] = "Fermer",
-    ["continue"] = "Continuer",
-    ["number_only"] = "Nombre Uniquement",
-    ["dropmoney"] = "Combien voulez-vous déposer ?"
+local languages = {
+    ["french"] = {
+        ["close"] = "Fermer",
+        ["continue"] = "Continuer",
+        ["number_only"] = "Nombre Uniquement",
+        ["dropmoney"] = "Combien voulez-vous déposer ?"
+    }
 }
 
-// -- // -- // -- // -- // -- // -- // -- //
-// DO NOT EDIT BELOW THIS LINE
-// -- // -- // -- // -- // -- // -- // -- //
-
-function SentroContext.GetTranslation(id)
-    return languages[SentroContext.Config.Language][id] or "ERROR"
+// Do not edit below this line !!
+function SentroContext:GetTrad(trad)
+    return languages[SentroContext.Config.Language][trad] || languages["english"][trad] || trad
 end

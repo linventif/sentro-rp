@@ -6,6 +6,24 @@ local function RespH(y)
     return ScrH() / 1080 * y
 end
 
+local function Notif(text)
+    local frame = vgui.Create("DPanel")
+    frame:SetSize(RespW(600), RespH(40))
+    frame:SetPos(ScrW()/2-RespW(300), RespH(-100))
+    frame.Paint = function(self, w, h)
+        draw.RoundedBox(8, 0, 0, w, h, FriendsSys.Config.Color["background"])
+        draw.SimpleText(text, "LinvFontRobo20", RespW(600)/2, RespH(20), FriendsSys.Config.Color["text"], TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+    end
+    print(text)
+    frame:MoveTo(ScrW()/2-RespW(300), RespH(10), 0.5, 0, 1)
+    timer.Simple(4, function()
+        frame:MoveTo(ScrW()/2-RespW(300), -RespH(100), 0.5, 0, 1)
+        timer.Simple(0.5, function()
+            frame:Remove()
+        end)
+    end)
+end
+
 local function NumberMenu(msg)
     local frame = vgui.Create("DFrame")
     frame:SetSize(RespW(400), RespH(290))
@@ -34,7 +52,7 @@ local function NumberMenu(msg)
         draw.RoundedBox(8, 0, 0, w, h, SentroContext.Config.Color["border"])
         draw.RoundedBox(6, RespW(3), RespH(3), w-RespW(6), h-RespH(6), SentroContext.Config.Color["background"])
         if self:GetText() == "" then
-            draw.SimpleText(SentroContext.GetTranslation("number_only"), "LinvFontRobo20", w/2, h/2, SentroContext.Config.Color["text"], TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+            draw.SimpleText(SentroContext:GetTrad("number_only"), "LinvFontRobo20", w/2, h/2, SentroContext.Config.Color["text"], TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
         elseif tonumber(self:GetText()) > LocalPlayer():getDarkRPVar("money") then
             draw.RoundedBox(8, 0, 0, w, h, SentroContext.Config.Color["red"])
             draw.RoundedBox(6, RespW(3), RespH(3), w-RespW(6), h-RespH(6), SentroContext.Config.Color["background"])
@@ -47,7 +65,7 @@ local function NumberMenu(msg)
     local but_close = vgui.Create("DButton", frame)
     but_close:SetSize(RespW(140), RespH(40))
     but_close:SetPos(RespW(40), RespH(210))
-    but_close:SetText(SentroContext.GetTranslation("close"))
+    but_close:SetText(SentroContext:GetTrad("close"))
     but_close:SetFont("LinvFontRobo20")
     but_close:SetTextColor(SentroContext.Config.Color["text"])
     but_close.Paint = function(self, w, h)
@@ -61,7 +79,7 @@ local function NumberMenu(msg)
     local but_continue = vgui.Create("DButton", frame)
     but_continue:SetSize(RespW(140), RespH(40))
     but_continue:SetPos(RespW(220), RespH(210))
-    but_continue:SetText(SentroContext.GetTranslation("continue"))
+    but_continue:SetText(SentroContext:GetTrad("continue"))
     but_continue:SetFont("LinvFontRobo20")
     but_continue:SetTextColor(SentroContext.Config.Color["text"])
     but_continue.Paint = function(self, w, h)
@@ -76,6 +94,10 @@ local function NumberMenu(msg)
 end
 
 hook.Add("OnContextMenuOpen", "BlockContextMenu", function()
+    if SentroContext.Config.BlacklistWeps[LocalPlayer():GetActiveWeapon():GetClass()] then
+        Notif(SentroContext:GetTrad("blacklist_weapon"))
+        return false
+    end
     local frame = vgui.Create("DFrame")
     frame:SetSize(RespW(500), ScrH())
     frame:SetPos(RespW(1920-500), 0)
@@ -150,7 +172,7 @@ hook.Add("OnContextMenuOpen", "BlockContextMenu", function()
                     gui.OpenURL(v.url)
                 elseif v.special then
                     if v.special == "dropmoney" then
-                        NumberMenu({SentroContext.GetTranslation("dropmoney")})
+                        NumberMenu({SentroContext:GetTrad("dropmoney")})
                     end
                 end
             end

@@ -104,6 +104,10 @@ SentroContext.Config.Content = {
     }
 }
 
+SentroContext.Config.BlacklistWeps = {
+    ["pistol"] = true
+}
+
 SentroContext.Config.Color = {
     ["border"] = Color(115, 115, 115),
     ["background"] = Color(55, 55, 55),
